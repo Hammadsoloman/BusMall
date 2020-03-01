@@ -27,10 +27,12 @@ var productImages = ['bag.jpg','banana.jpg','boots.jpg','breakfast.jpg','bubbleg
     centerProductImage.setAttribute('alt' , centerImageRandom.name);
     rightProductImage.setAttribute('src' , rightImageRandom.urlImage);
     rightProductImage.setAttribute('alt' ,rightImageRandom.name);
+    var i=0;
     while(leftProductImage === rightProductImage || centerProductImage === rightProductImage || centerProductImage === leftProductImage ){
         choiseRandomImages();  
-        this.totalClicks += this.products[i];
-        this.totalViews +=this.products[i];
+        totalClicks += products[i];
+        products[i].totalViews +=1;
+        i++
     }
   }
   
