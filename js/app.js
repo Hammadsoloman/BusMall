@@ -8,32 +8,42 @@ var productImages = ['bag.jpg','banana.jpg','boots.jpg','breakfast.jpg','bubbleg
   var allImageSection = document.getElementById('all_products');
   var products = [];
   var totalClicks = 0;
-  var totalViews = 0; 
    
 
   function Product(name){
     this.name = name;
     this.urlImage = `img/${this.name}`;
     products.push(this);
+    this.totalViews=0;
+    this.tatalVotes=0;
   }
   
   function choiseRandomImages(){
     var leftImageRandom =  products[randomNumber(0 , products.length-1 )];
     var centerImageRandom =  products[randomNumber(0 , products.length-1 )];
     var rightImageRandom =  products[randomNumber(0 , products.length-1 )];
+    while(leftImageRandom === rightImageRandom || centerImageRandom === rightImageRandom || centerImageRandom === leftImageRandom ){
+    leftImageRandom =  products[randomNumber(0 , products.length-1 )];
+    centerImageRandom =  products[randomNumber(0 , products.length-1 )];
+     rightImageRandom =  products[randomNumber(0 , products.length-1 )]; 
+    }
+
+    leftImageRandom.totalClicks++;
+    rightImageRandom.totalViews++;
+    centerImageRandom.totalVotes++;
+    
+
+    // console.log(leftImageRandom === leftImageRandom);
     leftProductImage.setAttribute('src' , leftImageRandom.urlImage);
     leftProductImage.setAttribute('alt' , leftImageRandom.name);
     centerProductImage.setAttribute('src' , centerImageRandom.urlImage);
     centerProductImage.setAttribute('alt' , centerImageRandom.name);
     rightProductImage.setAttribute('src' , rightImageRandom.urlImage);
     rightProductImage.setAttribute('alt' ,rightImageRandom.name);
-    var i=0;
-    while(leftProductImage === rightProductImage || centerProductImage === rightProductImage || centerProductImage === leftProductImage ){
-        choiseRandomImages();  
-        totalClicks += products[i];
-        products[i].totalViews +=1;
-        i++
-    }
+    
+    // choiseRandomImages().totalViews++;
+    // choiseRandomImages().tatalVotes++;
+    
   }
   
   
@@ -53,8 +63,19 @@ var productImages = ['bag.jpg','banana.jpg','boots.jpg','breakfast.jpg','bubbleg
       leftProductImage.remove();
       centerProductImage.remove();
       rightProductImage.remove();
+      var ulEl=document.getElementById("productList");
+      for(i=0;i<25;i++){
+        var sideEl=document.getElementById('side');
+        var ulEl=document.createElement('ui');
+        sideEl.appendchild(ulEl);
+        var liEl =document.createElement('li');
+        ulEl.appendchild(liEl);
+        liEl.textContent=`${products[i].name} had ${products[i].tatalVotes} votes and was shown ${products[i].totalViews} times`;
+
+      }
     }
   }
+  
   
   allImageSection.addEventListener('click' , clickImage);
 
